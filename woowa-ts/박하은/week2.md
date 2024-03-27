@@ -20,6 +20,31 @@
 - 함수가 아무것도 반환하지 않는 경우
 
 4. never 타입
+- 모든 타입의 하위 타입 (= 어떤 타입도 never에 할당될 수 없음)
 - 값을 반환할 수 없는 타입 (2가지)
   - 에러를 던지는 경우
   - 무한히 함수가 실행되는 경우
+
+5. Array 타입
+
+### 튜플
+
+- 배열 타입의 하위 타입으로, 기존 TS의 배열 기능 + 길이 제한을 추가
+- 원소 개수와 타입을 보장 가능
+
+6. enum 타입
+- 숫자 0부터 1씩 늘려가며 속성의 값을 수수로 추론 
+- 관련이 높은 멤버들을 문자열 상수처럼 사용하고자 할 때 유용
+- 단, 역방향으로 접근할 수 있고 할당된 값을 넘어서는 범위로 접근해도 TS는 막지 않음
+  - const enum으로 열거형을 선언하면 위 접근을 막아 JS 객체와 유사한 동작 보장
+  - 그러나 const enum으로 선언해도 숫자 상수로 관리되면 선언한 값 이외의 값을 할당, 접근하는 걸 막지 못함
+
+### 타입 조합
+
+1. Intersection (`ProductItem & {discount: number}`)
+2. Union (`ProductItem | CardItem`)
+3. Index Signature (`[key:string]: number`)
+4. Indexed Access Types (`type ElementOf<T> = typeof T[number]`)
+5. Mapped Types (`ProductItem | CardItem`)
+6. 템플릿 리터럴 타입
+7. 제네릭
