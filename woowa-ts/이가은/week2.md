@@ -9,8 +9,7 @@
 - 타입스크립트의 독자적 타입 시스템 중 하나는 `any`이다. 자바스크립트의 `typeof`, `Object.prototype.toString.call(...)`로 잡아낼 수 없다.
 - 모든 값을 오류 없이 받아낸다. 자바스크립트 기존 사용 방식과 같다.
 - `tsconfig.sjon` 파일에서 `noImplicitAny` 옵션을 활성화하면 `any` 타입의 경고를 발생시킬 수 있다.
-- 개발 단계에서 임시로 값을 지정할 때 임시로 사용 -> 하지만 후에 바꾸는 과정이 누락되면 문제가 발생될 수 있다.
-- API 요청, 응답 처리 및 외부 라이브러리를 사용할때 사용
+- 개발 단계에서 임시로 값을 지정할 때 임시로 사용 -> 하지만 후에 바꾸는 과정이 누락되면 문제가 발생될 수 있다. API 요청, 응답 처리 및 외부 라이브러리를 사용할때 사용
 
 ### 2. unknown 타입
 
@@ -40,7 +39,7 @@
 > **자바스크립트의 객체 타입이 아닌 타입스크립트의 특수한 타입 중 하나.**
 
 - `Array<number>`와 `number[]`는 같은 `Array` 타입
-- 타입으로 대괄호 `[]`를 사용하면 튜플을 가르킨다.
+- 타입으로 대괄호 `[]`를 사용하면 튜플을 가르킨다.
 - 대괄호 `[]` 안에 선언하는 타입 개수가 튜플이 가질 수 있는 원소의 개수이다.
 ```js
 let tuple:[number] = [1]; // 1개만 할당 가능
@@ -152,5 +151,86 @@ type StageName = `${Stage}-stage` // init-stage, select-image-stage, ... 와 같
 
 > **특징이 없거나, 일반적인 것.**
 
-- 함수, 타입, 클래스 등에서 내부적으로 미리 정해두지 않고, 타입 변수를 사용하여 해당 자리를 비워 둔 후에 그 값을 사용할 때 타입을 지정하여 사용하는 방식.
-- 
+- 함수, 타입, 클래스 등에서 내부적으로 미리 정해두지 않고, 타입 변수를 사용하여 해당 자리를 비워 둔 후에 호출시점에 타입을 지정하여 사용하는 방식.
+- `extends`를 사용하여 특정 하위타입만 오도록 허용
+
+
+### 3.3 제네릭 사용법
+
+### 1. 함수의 제네릭
+
+```js
+function 함수명<T>(arg: ObjectType<T> | EntityScheme<T> | string): Repository<T> {
+  return ~~~
+}
+```
+
+### 2. 호출 시그니처의 제네릭
+
+구체 타입 ????
+
+```js
+export type 타입명 = <RequestData = void, ResponseData = void>(url: string)
+=> [RequestStatus, Request<RequestData, ResponseData>];
+```
+
+### 3. 제네릭 클래스
+
+```js
+class LocalDB<T>{
+  async put(table: string, row:T): Promise<T> {
+    return new Promise<T>((resolved, rejected) => { ... });
+  }
+  ...
+}
+```
+
+### 4. 제한된 제네릭
+
+```js
+function 함수명<T extends 타입명>({
+  a,
+  b,
+  c
+}: 특정타입<T>): {
+  ...
+}{ ... }
+```
+
+
+### 5. 확장된 제네릭
+
+```js
+<Key extends string> // 제네릭의 유연성을 해친다. 사용X
+
+export class APIResponse<Ok, Err = string>{
+  ...
+}
+```
+
+### 6. 제네릭 예시
+
+```js
+// API 응답값을 지정할 때 사용
+export interface ApiResponse<Data> {
+  data: Data;
+  statusCode: string;
+  statusMessage?: string;
+};
+
+export const fetchData = (): Promise<ApiResponse<PriceInfo>> => {
+  ...
+  return request({
+    method: 'GET',
+    url: PriceUrl
+  })
+}
+
+export const fetchData = (): Promise<ApiResponse<OrderInfo>> => {
+  ...
+  return request({
+    method: 'GET',
+    url: OrderUrl
+  })
+}
+```
