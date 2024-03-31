@@ -48,3 +48,10 @@
 5. Mapped Types (`ProductItem | CardItem`)
 6. 템플릿 리터럴 타입
 7. 제네릭
+
+## 문제
+
+1. 제네릭의 장점은?
+2. 제네릭을 굳이 사용하지 않아도 되는 경우는? 
+3. 아래 코드의 타입은 무엇을 의미하는가?  
+`const arr: [number, number, number?] = [1,2,3]`
