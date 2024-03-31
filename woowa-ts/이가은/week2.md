@@ -234,3 +234,24 @@ export const fetchData = (): Promise<ApiResponse<OrderInfo>> => {
   })
 }
 ```
+
+
+---
+
+## 질문
+
+```js
+Q1: any와 unknown의 차이점은 뭔가요?
+
+Q2: enum의 단점을 한가지이상 알려주세요.
+
+Q3: 반환값을 never로 선언할 수 있는 경우 2가지가 있습니다. 어느 경우일까요?
+```
+
+---
+
+## 답변
+
+```js
+
+```
